@@ -3,7 +3,7 @@ var sinon = require('sinon');
 var PassThrough = require('stream').PassThrough;
 var http = require('http');
 
-var myapi = require('../../myapi');
+var api = require('../../api');
 
 describe.only('Api Test', function() {
   describe('smoke test', function() {
@@ -25,7 +25,7 @@ describe.only('Api Test', function() {
 
       this.request.callsArgWith(1, response).returns(request);
 
-      myapi.get(function(err, result) {
+      api.get(function(err, result) {
         assert.deepEqual(result, expected);
         done();
       });
@@ -40,7 +40,7 @@ describe.only('Api Test', function() {
 
       this.request.returns(request);
 
-      myapi.post(params, function() {});
+      api.post(params, function() {});
 
       assert(write.withArgs(expected).calledOnce);
 		});
@@ -51,7 +51,7 @@ describe.only('Api Test', function() {
 		 
 			this.request.returns(request);
 		 
-			myapi.get(function(err) {
+			api.get(function(err) {
 				assert.equal(err, expected);
 				done();
 			});
