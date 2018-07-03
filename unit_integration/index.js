@@ -55,5 +55,4 @@ module.exports = {
     //Step 4. Return the reversed string
     return joinArray; // "olleh"
   }
-  
 }
