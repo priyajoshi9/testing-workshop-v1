@@ -1,4 +1,4 @@
-module.exports = {
+var unitTest = {
   rockPaperScissors: function (a, b) {
     // Both players playing same thing
     if (a === b) {

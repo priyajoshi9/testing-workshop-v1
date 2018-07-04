@@ -1,52 +1,32 @@
-var http = require('http');
-
-module.exports = {
+var api = {
   get: function(callback) {
-    var req = http.request(
-      {
-        hostname: 'jsonplaceholder.typicode.com',
-        path: '/posts/1'
-      },
-      function(response) {
-        var data = '';
-        response.on('data', function(chunk) {
-          data += chunk;
-        });
-
-        response.on('end', function() {
-          callback(null, JSON.parse(data));
-        });
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://jsonplaceholder.typicode.com/posts/1', true);
+ 
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        if(xhr.status == 200) {
+          callback(null, JSON.parse(xhr.responseText));
+        }
+        else {
+          callback(xhr.status);
+        }
       }
-    );
-
-    req.on('error', function(err) {
-      callback(err);
-    });
-
-    req.end();
+    };
+ 
+    xhr.send();
   },
-
+ 
   post: function(data, callback) {
-    var req = http.request(
-      {
-        hostname: 'jsonplaceholder.typicode.com',
-        path: '/posts',
-        method: 'POST'
-      },
-      function(response) {
-        var data = '';
-        response.on('data', function(chunk) {
-          data += chunk;
-        });
-
-        response.on('end', function() {
-          callback(null, JSON.parse(data));
-        });
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://jsonplaceholder.typicode.com/posts', true);
+ 
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState == 4) {
+        callback();
       }
-    );
-
-    req.write(JSON.stringify(data));
-
-    req.end();
+    };
+ 
+    xhr.send(JSON.stringify(data));
   }
 };
